@@ -4,8 +4,8 @@
 import React, { useState, useContext } from "react";
 
 type DataContextType = {
-  data: any,
-  setData: React.Dispatch<any>
+  data: any[] | null,
+  setData: React.Dispatch<any[] | null>
 }
 
 type DataContextProps = {
@@ -19,7 +19,7 @@ function useData() {
 }
 
 function DataContextProvider({children}: DataContextProps) {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<any[] | null>(null);
 
   return (
   <DataContext.Provider value={{
