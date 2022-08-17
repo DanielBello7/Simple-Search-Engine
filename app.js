@@ -14,10 +14,9 @@ app.use(bodyParser.json())
 
 
 app.get("/api/search/:search", (req, res) => {
-    const search = req.params.search
-    const result = query_check(search)
-    res.json({data: result, msg: "success"})
+  const search = req.params.search
+  const result = query_check(search)
+  res.json({data: result, msg: "success"})
 })
 
-
-app.listen(2022, "127.0.0.1", () => console.log('active on port 127.0.0.1:2022....'))
+app.listen(2022, "127.0.0.1", () => console.log('active on port 127.0.0.1:2022....'));
