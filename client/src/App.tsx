@@ -1,11 +1,11 @@
 
 
 
+import {Route, Routes} from "react-router-dom";
 import SearchHome from "./routes/SearchHome.routes";
 import SearchResult from "./routes/SearchResult.routes";
 import Default from "./routes/Default.routes";
 import Analytics from './routes/Analytics.routes';
-import {Route, Routes} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import AlertModal from "./components/AlertModal";
