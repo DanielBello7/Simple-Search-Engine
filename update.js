@@ -2,4 +2,4 @@
 
 
 // This updates the database
-const path = require('path')
+const path = require('path');
