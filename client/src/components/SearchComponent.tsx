@@ -7,7 +7,7 @@ import ResultsComponent from "./ResultsComponent";
 
 export default function SearchComponent() {
   
-  const [search, setSearch] = useState<string>("");
+  // const [search, setSearch] = useState<string>("");
 
   const [results, setResults] = useState<any[]>([]);
 

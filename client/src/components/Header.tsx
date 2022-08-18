@@ -1,8 +1,18 @@
 
 
 
+import {FaBook} from 'react-icons/fa';
+import OptionsComponent from "./OptionsComponent";
+
 export default function Header() {
   return (
-  <header>Header</header>
+  <header className="container mx-auto w-100 flex justify-between py-4 px-2 md:px-0 lg:px-0">
+  <div className='flex items-center flex-row'>
+  <h1 className="text-4xl font-bold mr-2">finder</h1>
+  <FaBook size={30} />
+  </div>
+  
+  <OptionsComponent />
+  </header>
   );
 }

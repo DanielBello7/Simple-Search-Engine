@@ -16,6 +16,9 @@ type DataContextType = {
   alertData: {msg: string, type: boolean},
   setAlertData: React.Dispatch<React.SetStateAction<{msg: string, type: boolean}>>,
 
+  isDarkMode: boolean,
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>,
+
   ShowAlert: (msg: string, type: boolean) => void
 }
 
@@ -33,6 +36,8 @@ function DataContextProvider({children}: DataContextProps) {
   const [data, setData] = useState<any[] | null>(null);
 
   const [isLoading, setLoading] = useState(false);
+
+  const [isDarkMode, setDarkMode] = useState(false);
 
   const [isAlertOpen, setAlertOpen] = useState(false);
 
@@ -56,6 +61,9 @@ function DataContextProvider({children}: DataContextProps) {
 
     alertData,
     setAlertData,
+
+    isDarkMode,
+    setDarkMode,
 
     ShowAlert
   }}>

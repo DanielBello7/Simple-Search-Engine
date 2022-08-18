@@ -12,14 +12,16 @@ import AlertModal from "./components/AlertModal";
 
 export default function App() {
   return (
-  <div className="w-100 h-screen border-4">
+  <div className="w-100 flex flex-col h-screen">
   <Header />
+  <div className="w-100 flex-1">
   <Routes>
   <Route path="/" element={<SearchHome />}/>
   <Route path="/analytics" element={<Analytics />}/>
   <Route path="/:resultID" element={<SearchResult />}/>
   <Route path="*" element={<Default />}/>
   </Routes>
+  </div>
   <Footer />
   <AlertModal />
   </div>
