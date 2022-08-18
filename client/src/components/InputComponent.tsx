@@ -25,7 +25,7 @@ export default function InputComponent() {
     >
   <div className='w-full md:w-3/5 lg:w-2/5 px-2 sm:px-5'>
   <h1 className='font-bold text-2xl mb-8'>Upload Data</h1>
-  <TabComponent />
+  <TabComponent setShowing={setShowing}/>
   </div>
   </Transition>
   );
