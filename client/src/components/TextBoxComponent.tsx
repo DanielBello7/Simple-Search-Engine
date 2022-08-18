@@ -1,26 +1,27 @@
 
 
 
+import ButtonComponent from "./ButtonComponent";
+
 type TextBoxProps = {
-  label?: string,
-  description: string,
-  placeholder: string
+  placeholder?: string
 }
 
-function TextBoxComponent({label, description, placeholder}: TextBoxProps) {
+export default function TextBoxComponent({placeholder}: TextBoxProps) {
   return (
-  <div>
-  { label && <label htmlFor="about" className="block text-sm font-medium text-gray-700">{label}</label> }
-  <div className="mt-1">
-    <textarea id="about"
-      name="about"
-      rows={3}
-      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
-      placeholder={placeholder}
-      defaultValue={''}
-    />
+  <div className="flex flex-col flex-1 shadow sm:rounded-md sm:overflow-hidden">
+  <div className="flex flex-1">
+  <textarea id="about"
+    name="about"
+    style={{resize: "none"}}
+    className="focus:ring-blue-0 focus:border-blue-0 mt-1 block w-full sm:text-sm p-3"
+    placeholder={placeholder && placeholder}
+    defaultValue={''}
+  />
   </div>
-  <p className="mt-2 text-sm text-gray-500">{description}</p>
+  <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+  <ButtonComponent click={() => alert('yes')} color="blue" isLoading={false} title="Upload"/>
+  </div>
   </div>
   );
 }
