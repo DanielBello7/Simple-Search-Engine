@@ -3,7 +3,7 @@
 
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
-import { FaCog, FaMoon, FaSun, FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
+import { FaCog, FaMoon, FaSun, FaInfoCircle, FaTrashAlt, FaUserCircle } from 'react-icons/fa';
 import { useData } from '../context/DataContext';
 
 
@@ -40,6 +40,21 @@ export default function OptionsComponent() {
           >
           {isDarkMode ? <FaSun size={15}/> : <FaMoon size={15}/> }
           <span className='ml-2 font-bold'>{isDarkMode ? "Light mode" : "Dark mode"}</span>
+          </button> 
+        )
+      }
+      </Menu.Item>
+
+      <Menu.Item>
+      { 
+        ({ active, disabled }) => (
+          <button disabled={disabled}
+          className={`${
+            active ? 'bg-blue-500 text-white' : 'text-gray-900'
+          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+          >
+          <FaUserCircle size={15}/>
+          <span className='ml-2 font-bold'>Clear session</span>
           </button> 
         )
       }

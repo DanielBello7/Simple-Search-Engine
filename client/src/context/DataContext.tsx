@@ -3,6 +3,17 @@
 
 import React, { useState, useContext } from "react";
 
+type AlertDataType = {
+  msg: string,
+  type: boolean
+}
+
+type UserDataType = {
+  firstname: string,
+  lastname: string,
+  email: string
+}
+
 type DataContextType = {
   data: any[] | null,
   setData: React.Dispatch<React.SetStateAction<any[] | null>>,
@@ -14,10 +25,13 @@ type DataContextType = {
   setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>,
 
   alertData: {msg: string, type: boolean},
-  setAlertData: React.Dispatch<React.SetStateAction<{msg: string, type: boolean}>>,
+  setAlertData: React.Dispatch<React.SetStateAction<AlertDataType>>,
 
   isDarkMode: boolean,
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>,
+
+  user: UserDataType | null,
+  setUser: React.Dispatch<React.SetStateAction<UserDataType | null>>,
 
   ShowAlert: (msg: string, type: boolean) => void
 }
@@ -33,7 +47,6 @@ function useData() {
 }
 
 function DataContextProvider({children}: DataContextProps) {
-  const [data, setData] = useState<any[] | null>(null);
 
   const [isLoading, setLoading] = useState(false);
 
@@ -41,7 +54,11 @@ function DataContextProvider({children}: DataContextProps) {
 
   const [isAlertOpen, setAlertOpen] = useState(false);
 
-  const [alertData, setAlertData] = useState({msg: "", type: false});
+  const [data, setData] = useState<any[] | null>(null);
+
+  const [user, setUser] = useState<UserDataType | null>(null);
+
+  const [alertData, setAlertData] = useState({} as AlertDataType);
 
   const ShowAlert = (msg: string, type: boolean) => {
     setAlertData({msg: msg, type: type});
@@ -64,6 +81,9 @@ function DataContextProvider({children}: DataContextProps) {
 
     isDarkMode,
     setDarkMode,
+
+    user,
+    setUser,
 
     ShowAlert
   }}>
