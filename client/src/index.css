@@ -8,4 +8,8 @@ body {
 }
 * {
   box-sizing: border-box;
+  transition: 1s ease all;
+}
+#search {
+  transition: 0s ease all;
 }

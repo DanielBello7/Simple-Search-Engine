@@ -9,10 +9,13 @@ import Analytics from './routes/Analytics.routes';
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import AlertModal from "./components/AlertModal";
+import { useData } from "./context/DataContext";
 
 export default function App() {
+  const {searchActive} = useData();
+
   return (
-  <div className="w-100 flex flex-col h-screen">
+  <div className={`w-100 flex flex-col h-screen ${searchActive && "bg-gray-100"}`}>
   <Header />
   <div className="w-100 flex-1">
   <Routes>

@@ -7,11 +7,16 @@ import ResultsComponent from "./ResultsComponent";
 
 export default function SearchComponent() {
   
-  // const [search, setSearch] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
 
   const [results, setResults] = useState<any[]>([]);
 
-  if (results.length <= 0) return <SearchBox setResults={setResults}/>
+  if (results.length <= 0) return <SearchBox setResults={setResults} 
+                                             setSearch={setSearch} 
+                                             search={search}
+                                             />
+
   return <ResultsComponent results={results} 
-                           clearSearch={() => setResults([])}/>
+                           clearSearch={() => setResults([])}
+                           />
 }
