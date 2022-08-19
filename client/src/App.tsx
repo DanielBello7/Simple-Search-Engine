@@ -15,9 +15,9 @@ export default function App() {
   const {searchActive} = useData();
 
   return (
-  <div className={`w-100 flex flex-col h-screen ${searchActive && "bg-gray-100"}`}>
+  <div className={`w-100 flex flex-col h-screen max-h-full overflow-hidden ${searchActive ? "bg-gray-100" : "bg-white"}`}>
   <Header />
-  <div className="w-100 flex-1">
+  <div className="w-full flex flex-col h-5/6">
   <Routes>
   <Route path="/" element={<SearchHome />}/>
   <Route path="/analytics" element={<Analytics />}/>
