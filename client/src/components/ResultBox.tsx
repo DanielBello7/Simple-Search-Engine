@@ -2,10 +2,10 @@
 
 
 import React from 'react';
+import Loader from './Loader';
 import {BiSearch, BiTrash, BiFile} from 'react-icons/bi';
 import {Transition} from '@headlessui/react';
 import {FaTimes} from 'react-icons/fa';
-import Loader from './Loader';
 
 type ResultBoxProps = {
   searchActive: boolean,
@@ -17,7 +17,8 @@ type ResultBoxProps = {
   setRecent: React.Dispatch<React.SetStateAction<any[]>>
 }
 
-export default function ResultBox({searchActive, isLoading, searchItem, recent, results, setRecent}: ResultBoxProps) {
+export default function ResultBox(props: ResultBoxProps) {
+  const {searchActive, isLoading, searchItem, recent, results, setRecent, setResult} = props;
 
   const RemoveRecentItem = (id: number) => {
     const filtered = recent.filter((item: any, index: number) => index !== id);
@@ -39,6 +40,7 @@ export default function ResultBox({searchActive, isLoading, searchItem, recent, 
   const resultOutput = results.map((item, index) => (
     <div className='w-full flex flex-row items-center hover:bg-slate-50 transition 0.3s p-2 rounded-lg cursor-pointer' 
     key={index}
+    onClick={() => setResult(item)}
     >
     <BiFile color='blue' size={18}/>
     <span className="ml-3 text-gray-400 font-bold">{item}</span>
@@ -47,11 +49,14 @@ export default function ResultBox({searchActive, isLoading, searchItem, recent, 
 
   return (
   <Transition show={searchActive} 
-    className="border max-h-full bg-white w-full md:w-4/5 lg:w-2/5 flex flex-col items-center py-3 px-3 rounded-lg mb-10 mt-2 shadow overflow-scroll" 
+    className="border max-h-full bg-white w-full md:w-4/5 lg:w-2/5 flex flex-col items-center py-3 px-3 rounded-lg mb-10 mt-2 shadow overflow-scroll z-10" 
     as="div"
-    leave="transition ease-in duration-100"
-    leaveFrom="opacity-100"
-    leaveTo="opacity-0"
+    enter="transition duration-100 ease-out"
+    enterFrom="transform scale-95 opacity-0"
+    enterTo="transform scale-100 opacity-100"
+    leave="transition duration-75 ease-out"
+    leaveFrom="transform scale-100 opacity-100"
+    leaveTo="transform scale-95 opacity-0"
   >
     {
       searchActive && !searchItem.trim() && recent.length > 0 &&
