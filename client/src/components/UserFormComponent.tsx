@@ -4,6 +4,7 @@
 import {useState, useEffect, useRef} from 'react';
 import {Transition} from '@headlessui/react';
 import {useData} from '../context/DataContext';
+import {AxiosError} from 'axios';
 import TextInformation from './TextInformation';
 import TextInputBox2 from './TextInputBox2';
 import ButtonComponent from './ButtonComponent';
@@ -16,11 +17,24 @@ export default function UserFormComponent() {
 
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const {ShowAlert, setUser} = useData();
+  const {ShowAlert, setUser, axios} = useData();
 
   const [isShowing, setShowing] = useState(false);
 
   const [isLoading, setLoading] = useState(false);
+
+  const HandleSkip = () => {
+
+    const data = {
+      firstname: "guest",
+      lastname: "guest",
+      email: "guest@gmail.com"
+    }
+    
+    setShowing(false);
+    
+    return setTimeout(() => setUser(data), 500);
+  }
 
   const HandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -32,20 +46,28 @@ export default function UserFormComponent() {
       lastname: lastnameRef.current?.value as string,
       email: emailRef.current?.value as string
     }
+
+    const controller = new AbortController();
+
+    const timeout = setTimeout(() => controller.abort(), 20000);
     
-    try {
-      setTimeout(() => {
-        setShowing(false);
-        setLoading(false);
-      }, 2000);
-      
-      return setTimeout(() => {
-        setUser(data);
-      }, 3000);
-    }
-    catch (error) {
-    return ShowAlert("Error handling data. PLease try again", false);
-    }
+    axios.post("/user", {...data}, {signal: controller.signal})
+    .then((res) => {
+      const response = res.data.data;
+      setShowing(false);
+      return response;
+    })
+    .then((res) => {
+      clearTimeout(timeout);
+      setLoading(false);
+      return setTimeout(() => setUser(res), 2000);
+    })
+    .catch((error) => {
+      const Err = error as AxiosError;
+      clearTimeout(timeout);
+      setLoading(false);
+      return ShowAlert(Err.message, false);
+    });
   }
   
   useEffect(() => {
@@ -95,7 +117,9 @@ export default function UserFormComponent() {
       value={emailRef}/>
     </div>
 
-    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6 flex flex-row items-center justify-end">
+    <button type='button' disabled={isLoading && true} className='mr-2 px-7 py-2 text-sm bg-gray-400 text-white rounded-lg border-2 hover:bg-gray-500' onClick={HandleSkip}>Skip</button>
+
     <ButtonComponent click={HandleSubmit} title="Continue" color='blue' isLoading={isLoading}/>
     </div>
     </form>

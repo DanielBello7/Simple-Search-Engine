@@ -2,6 +2,7 @@
 
 
 import React, { useState, useContext } from "react";
+import Axios, { AxiosInstance } from 'axios';
 
 type AlertDataType = {
   msg: string,
@@ -36,12 +37,15 @@ type DataContextType = {
   searchActive: boolean,
   setSearchActive: React.Dispatch<React.SetStateAction<boolean>>,
 
-  ShowAlert: (msg: string, type: boolean) => void
+  ShowAlert: (msg: string, type: boolean) => void,
+  axios: AxiosInstance
 }
 
 type DataContextProps = {
   children: React.ReactNode
 }
+
+const baseURL = "http://127.0.0.1:2022/api";
 
 const DataContext = React.createContext({} as DataContextType);
 
@@ -50,6 +54,7 @@ function useData() {
 }
 
 function DataContextProvider({children}: DataContextProps) {
+  const axios = Axios.create({baseURL: baseURL});
 
   const [isLoading, setLoading] = useState(false);
 
@@ -93,7 +98,8 @@ function DataContextProvider({children}: DataContextProps) {
     searchActive,
     setSearchActive,
 
-    ShowAlert
+    ShowAlert,
+    axios
   }}>
     {children}
   </DataContext.Provider>

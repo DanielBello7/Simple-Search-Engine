@@ -4,6 +4,7 @@
 import {useState} from 'react';
 import {json} from '@codemirror/lang-json';
 import {useData} from '../context/DataContext';
+import {githubLight} from '@uiw/codemirror-theme-github';
 import ButtonComponent from './ButtonComponent';
 import CodeMirror from '@uiw/react-codemirror';
 
@@ -47,8 +48,10 @@ export default function CodeBox({setShowing}: CodeBoxProps) {
   <CodeMirror
     value={value}
     height="100%"
-    className='flex-1'
+    id="codebox"
+    className='flex-1 h-4/5'
     autoCapitalize='off'
+    theme={{extension: githubLight}}
     extensions={[json()]}
     onChange={(e) => setValue(e)}
     />
