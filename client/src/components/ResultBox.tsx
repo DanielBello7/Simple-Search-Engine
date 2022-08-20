@@ -51,6 +51,7 @@ export default function ResultBox(props: ResultBoxProps) {
   <Transition show={searchActive} 
     className="border max-h-full bg-white w-full md:w-4/5 lg:w-2/5 flex flex-col items-center py-3 px-3 rounded-lg mb-10 mt-2 shadow overflow-scroll z-10" 
     as="div"
+    id='result-box'
     enter="transition duration-100 ease-out"
     enterFrom="transform scale-95 opacity-0"
     enterTo="transform scale-100 opacity-100"

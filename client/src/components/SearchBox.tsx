@@ -62,8 +62,9 @@ export default function SearchBox({setResult}: SearchBoxProps) {
   return (
   <div className="w-full flex h-full relative flex-col items-center justify-center px-3">
     <div className='w-full absolute top-0 h-full -z-1' onClick={() => setSearchActive(false)}/>
-    <form className={`${!searchActive ? "bg-gray-100" : "bg-white"} w-full md:w-4/5 lg:w-2/5 flex flex-row items-center p-3 rounded-lg mt-10 shadow z-10`} 
-          onSubmit={HandleSearch}>
+    <form className={`${!searchActive ? "bg-gray-100 mb-10 -mt-10" : "bg-white"} w-full md:w-4/5 lg:w-2/5 flex flex-row items-center p-3 rounded-lg shadow z-10`} 
+          onSubmit={HandleSearch}
+          id="search-form">
     <BiSearch size={30} color="grey" className="mr-3" />
     <input type="text" className="w-full bg-transparent text-xl focus:outline-none" 
       placeholder="Quick Access"
