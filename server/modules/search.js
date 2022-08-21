@@ -1,7 +1,7 @@
 
 
 
-const data = require('./data.json');
+const data = require('../temp/data.json');
 
 function query_check(query){
   let results = [];

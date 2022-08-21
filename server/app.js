@@ -4,9 +4,8 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const session = require('express-session');
-const query_check = require('./search');
-const advanced_query_search = require('./advanced_search');
+const query_check = require('./modules/search');
+const advanced_query_search = require('./modules/advanced_search');
 
 const app = express();
 

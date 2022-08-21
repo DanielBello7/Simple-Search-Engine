@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --watch __tests__",
     "start": "node app",
     "dev": "nodemon app"
   },
@@ -13,8 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "chai": "^4.3.6",
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "express-session": "^1.17.3"
+    "express-session": "^1.17.3",
+    "mocha": "^10.0.0"
   }
 }
