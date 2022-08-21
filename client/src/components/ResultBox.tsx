@@ -3,9 +3,9 @@
 
 import React from 'react';
 import Loader from './Loader';
-import {BiSearch, BiTrash, BiFile} from 'react-icons/bi';
-import {Transition} from '@headlessui/react';
 import {FaTimes} from 'react-icons/fa';
+import {Transition} from '@headlessui/react';
+import {BiSearch, BiTrash, BiFile} from 'react-icons/bi';
 
 type ResultBoxProps = {
   searchActive: boolean,
