@@ -50,7 +50,7 @@ export default function FileImportComponent({title, fileTypeText, file, setFile}
         name="file-upload" 
         type="file" 
         className="sr-only" 
-        accept="JSON" 
+        accept=".json" 
         onChange={HandleChange}
         />
       </label>
@@ -64,5 +64,5 @@ export default function FileImportComponent({title, fileTypeText, file, setFile}
 
   </div>
   </div>
-  )
+  );
 }

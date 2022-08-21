@@ -16,8 +16,8 @@ type UserDataType = {
 }
 
 type DataContextType = {
-  data: any[] | null,
-  setData: React.Dispatch<React.SetStateAction<any[] | null>>,
+  hasData: boolean,
+  setHasData: React.Dispatch<React.SetStateAction<boolean>>,
 
   isLoading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -62,7 +62,7 @@ function DataContextProvider({children}: DataContextProps) {
 
   const [isAlertOpen, setAlertOpen] = useState(false);
 
-  const [data, setData] = useState<any[] | null>(null);
+  const [hasData, setHasData] = useState(false);
 
   const [searchActive, setSearchActive] = useState(false);
 
@@ -77,8 +77,8 @@ function DataContextProvider({children}: DataContextProps) {
 
   return (
   <DataContext.Provider value={{
-    data,
-    setData,
+    hasData,
+    setHasData,
 
     isLoading,
     setLoading,

@@ -7,8 +7,8 @@ import UserFormComponent from "../components/UserFormComponent";
 import {useData} from "../context/DataContext";
 
 export default function SearchHome() {
-  const {data, user} = useData();
-  if (user) return <UserFormComponent />
-  if (data) return <InputComponent />
+  const {hasData, user} = useData();
+  if (!user) return <UserFormComponent />
+  if (!hasData) return <InputComponent />
   return <SearchComponent />
 }

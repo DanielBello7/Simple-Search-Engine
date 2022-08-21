@@ -11,20 +11,32 @@ type ImportBoxProps = {
 }
 
 export default function ImportBox({setShowing}: ImportBoxProps) {
-  const {ShowAlert, setData} = useData();
+  const {ShowAlert, setHasData} = useData();
 
   const [isLoading, setLoading] = useState(false);
 
   const [file, setFile] = useState<File | null>(null);
 
-  const HandleSubmit = () => {
+  const GetFileData = (file: File): any => new Promise((resolve, reject) => {
+    const temp = new FileReader();
+    
+    temp.readAsText(file);
+    
+    temp.onloadend = () => {
+      const a = JSON.parse(temp.result as string);
+      resolve(a);
+    };
+  });
+
+  const HandleSubmit = async () => {
     if (!file) return;
+
+    if (file.type !== 'application/json') return ShowAlert('Incorrect file type', false);
 
     setLoading(true);
 
-    const result = [{}];
-
     try {
+      const result = await GetFileData(file);
 
       setTimeout(() => {
         setLoading(false);
@@ -32,9 +44,7 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
         console.log(result);
       }, 2000);
 
-      setTimeout(() => {
-        setData(result);
-      }, 3000);
+      setTimeout(() => setHasData(true), 3000);
 
     } catch (error) {
       setLoading(false);
