@@ -13,7 +13,7 @@ type CodeBoxProps = {
 }
 
 export default function CodeBox({setShowing}: CodeBoxProps) {
-  const {ShowAlert, setHasData, axios} = useData();
+  const {ShowAlert, setHasData, axios, setData} = useData();
 
   const [value, setValue] = useState<string>("");
 
@@ -27,7 +27,7 @@ export default function CodeBox({setShowing}: CodeBoxProps) {
     try {
       const result = JSON.parse(value);
 
-      const sendResult = await axios.post("/data/upload", {repo: result});
+      const sendResult = await axios.get("/data/ready");
 
       const res = await sendResult.data.success;
 
@@ -37,7 +37,17 @@ export default function CodeBox({setShowing}: CodeBoxProps) {
       
       setLoading(false);
 
-      return setTimeout(() => setHasData(true), 1000);
+      return setTimeout(() => {
+
+        if (typeof(result) !== "object") return ShowAlert("Data type not understood", false);
+        
+        setHasData(true);
+
+        if (Array.isArray(result)) return setData(result);
+
+        return setData([result]);
+
+      }, 1000);
 
     } catch (error) {
       

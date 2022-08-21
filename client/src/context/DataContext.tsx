@@ -19,6 +19,9 @@ type DataContextType = {
   hasData: boolean,
   setHasData: React.Dispatch<React.SetStateAction<boolean>>,
 
+  data: any[],
+  setData: React.Dispatch<React.SetStateAction<any[]>>,
+
   isLoading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
 
@@ -54,7 +57,7 @@ function useData() {
 }
 
 function DataContextProvider({children}: DataContextProps) {
-  const axios = Axios.create({baseURL: baseURL, withCredentials: true});
+  const axios = Axios.create({baseURL: baseURL});
 
   const [isLoading, setLoading] = useState(false);
 
@@ -63,6 +66,8 @@ function DataContextProvider({children}: DataContextProps) {
   const [isAlertOpen, setAlertOpen] = useState(false);
 
   const [hasData, setHasData] = useState(false);
+
+  const [data, setData] = useState<any[]>([]);
 
   const [searchActive, setSearchActive] = useState(false);
 
@@ -79,6 +84,9 @@ function DataContextProvider({children}: DataContextProps) {
   <DataContext.Provider value={{
     hasData,
     setHasData,
+
+    data,
+    setData,
 
     isLoading,
     setLoading,

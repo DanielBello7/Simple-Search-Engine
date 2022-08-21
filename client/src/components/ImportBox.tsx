@@ -11,7 +11,7 @@ type ImportBoxProps = {
 }
 
 export default function ImportBox({setShowing}: ImportBoxProps) {
-  const {ShowAlert, setHasData} = useData();
+  const {ShowAlert, setHasData, axios, setData} = useData();
 
   const [isLoading, setLoading] = useState(false);
 
@@ -38,13 +38,27 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
     try {
       const result = await GetFileData(file);
 
-      setTimeout(() => {
-        setLoading(false);
-        setShowing(false);
-        console.log(result);
-      }, 2000);
+      const sendResult = await axios.get("/data/ready");
 
-      setTimeout(() => setHasData(true), 3000);
+      const res = await sendResult.data.success;
+
+      if (!res) return ShowAlert("Error uploading data", false);
+
+      setShowing(false);
+      
+      setLoading(false);
+
+      return setTimeout(() => {
+        console.log(result);
+        
+        if (typeof(result) !== "object") return ShowAlert("Data type not understood", false);
+        
+        setHasData(true);
+
+        if (Array.isArray(result)) return setData(result);
+
+        return setData([result]);
+      }, 1000);
 
     } catch (error) {
       setLoading(false);

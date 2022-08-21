@@ -17,7 +17,7 @@ export default function SearchBox({setResult}: SearchBoxProps) {
 
   const [isShown, setIsShown] = useState(false);
 
-  const {setSearchActive, searchActive, axios, ShowAlert} = useData();
+  const {setSearchActive, searchActive, axios, ShowAlert, data} = useData();
 
   const [search, setSearch] = useState<string>("");
 
@@ -35,7 +35,6 @@ export default function SearchBox({setResult}: SearchBoxProps) {
     recent.length <=3 && setRecent(prevState => [...prevState, searchItem]);
   }
 
-
   useEffect(() => {
     const controller = new AbortController();
 
@@ -49,7 +48,8 @@ export default function SearchBox({setResult}: SearchBoxProps) {
     
     const searchTimeout = setTimeout(() => {
 
-      axios.get(`/search/${search}`, {signal: controller.signal})
+      // axios.get(`/search/${search}`, {signal: controller.signal})
+      axios.post('/search', {data: data, search: search}, {signal: controller.signal})
       .then((res) => {
         const results = res.data.data;
 
@@ -82,7 +82,6 @@ export default function SearchBox({setResult}: SearchBoxProps) {
       clearTimeout(searchTimeout);
     }
   }, [search]);
-
 
   useEffect(() => {
     const timeout = setTimeout(() => setIsShown(true), 500);
