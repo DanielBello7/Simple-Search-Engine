@@ -1,7 +1,7 @@
 
 
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Axios, { AxiosInstance } from 'axios';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -85,6 +85,10 @@ function DataContextProvider({children}: DataContextProps) {
     setAlertData({msg: msg, type: type});
     return setAlertOpen(true);
   }
+
+  useEffect(() => {
+    return () => localStorage.clear();
+  }, []);
 
   return (
   <DataContext.Provider value={{
