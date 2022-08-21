@@ -18,14 +18,20 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
   const [file, setFile] = useState<File | null>(null);
 
   const GetFileData = (file: File): any => new Promise((resolve, reject) => {
-    const temp = new FileReader();
+    try {
+
+      const temp = new FileReader();
     
-    temp.readAsText(file);
-    
-    temp.onloadend = () => {
-      const a = JSON.parse(temp.result as string);
-      resolve(a);
-    };
+      temp.readAsText(file);
+      
+      temp.onloadend = () => {
+        try {
+          const a = JSON.parse(temp.result as string);
+          resolve(a);
+        } catch (error) { reject(error) }
+      };
+    }
+    catch (error) { reject(error) }
   });
 
   const HandleSubmit = async () => {
@@ -49,9 +55,11 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
       setLoading(false);
 
       return setTimeout(() => {
-        console.log(result);
         
-        if (typeof(result) !== "object") return ShowAlert("Data type not understood", false);
+        if (typeof(result) !== "object") {
+          setShowing(true);
+          return ShowAlert("Data type not understood", false);
+        }
         
         setHasData(true);
 
@@ -60,9 +68,12 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
         return setData([result]);
       }, 1000);
 
-    } catch (error) {
+    } 
+    catch (error: any) {
+      
       setLoading(false);
-      return ShowAlert("Error uploading data", false);
+
+      return ShowAlert("Error uploading data. Check the data", false);
     }
   }
 

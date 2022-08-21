@@ -8,10 +8,23 @@ import { useData } from '../context/DataContext';
 
 
 export default function OptionsComponent() {
-  const {isDarkMode} = useData();
+  const {isDarkMode, setUser, setData, setDarkMode, ShowAlert, setHasData, setRecent} = useData();
+
+  const ClearSession = () => {
+    setData(null);
+    setHasData(false);
+    setRecent([]);
+    return setUser(null);
+  }
+
+  const ClearData = () => {
+    setData(null);
+    setRecent([]);
+    return setHasData(false)
+  }
 
   return (
-  <div className="w-56 text-right">
+  <div className="w-56 text-right z-30">
   <Menu as="div" className="relative inline-block text-left">
     <div>
     <Menu.Button className="px-4 py-2 focus:outline-none">
@@ -34,6 +47,7 @@ export default function OptionsComponent() {
       { 
         ({ active, disabled }) => (
           <button disabled={disabled}
+          onClick={() => setDarkMode(isDarkMode ? false : true)}
           className={`${
             active ? 'bg-blue-500 text-white' : 'text-gray-900'
           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -49,6 +63,7 @@ export default function OptionsComponent() {
       { 
         ({ active, disabled }) => (
           <button disabled={disabled}
+          onClick={ClearSession}
           className={`${
             active ? 'bg-blue-500 text-white' : 'text-gray-900'
           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -64,6 +79,7 @@ export default function OptionsComponent() {
       { 
         ({ active, disabled }) => (
           <button disabled={disabled}
+          onClick={() => ShowAlert("Finder. Visit our website for more details", true)}
           className={`${
             active ? 'bg-blue-500 text-white' : 'text-gray-900'
           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -79,6 +95,7 @@ export default function OptionsComponent() {
       { 
         ({ active, disabled }) => (
           <button disabled={disabled}
+          onClick={ClearData}
           className={`${
             active ? 'bg-red-500 text-white' : 'text-red-500'
           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

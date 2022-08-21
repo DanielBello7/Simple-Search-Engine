@@ -21,3 +21,11 @@ body {
 #result-box {
   transition: 0.3s ease all;
 }
+pre {
+  font-family: Consolas,"courier new";
+  color: crimson;
+  word-wrap: break-word;
+  padding: 2px;
+  font-size: 105%;
+  line-height: 30px;
+}

@@ -39,7 +39,10 @@ export default function CodeBox({setShowing}: CodeBoxProps) {
 
       return setTimeout(() => {
 
-        if (typeof(result) !== "object") return ShowAlert("Data type not understood", false);
+        if (typeof(result) !== "object") {
+          setShowing(true);
+          return ShowAlert("Data type not understood", false);
+        }
         
         setHasData(true);
 
@@ -49,9 +52,9 @@ export default function CodeBox({setShowing}: CodeBoxProps) {
 
       }, 1000);
 
-    } catch (error) {
-      
-      ShowAlert("Error", false);
+    } catch (error: any) {
+
+      ShowAlert("Error uploading data. Check the data", false);
 
       return setLoading(false);
     }

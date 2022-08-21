@@ -3,6 +3,7 @@
 
 import React, { useState, useContext } from "react";
 import Axios, { AxiosInstance } from 'axios';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 type AlertDataType = {
   msg: string,
@@ -19,8 +20,11 @@ type DataContextType = {
   hasData: boolean,
   setHasData: React.Dispatch<React.SetStateAction<boolean>>,
 
-  data: any[],
-  setData: React.Dispatch<React.SetStateAction<any[]>>,
+  data: any[] | null,
+  setData: React.Dispatch<React.SetStateAction<any[] | null>>,
+
+  recent: any[],
+  setRecent: React.Dispatch<React.SetStateAction<any[]>>,
 
   isLoading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>,
@@ -65,13 +69,15 @@ function DataContextProvider({children}: DataContextProps) {
 
   const [isAlertOpen, setAlertOpen] = useState(false);
 
-  const [hasData, setHasData] = useState(false);
+  const [hasData, setHasData] = useLocalStorage('hasData', false);
 
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useLocalStorage<any[] | null>('data', null);
+
+  const [recent, setRecent] = useLocalStorage<any[]>('recent', []);
 
   const [searchActive, setSearchActive] = useState(false);
 
-  const [user, setUser] = useState<UserDataType | null>(null);
+  const [user, setUser] = useLocalStorage<UserDataType | null>('user', null);
 
   const [alertData, setAlertData] = useState({} as AlertDataType);
 
@@ -87,6 +93,9 @@ function DataContextProvider({children}: DataContextProps) {
 
     data,
     setData,
+
+    recent,
+    setRecent,
 
     isLoading,
     setLoading,

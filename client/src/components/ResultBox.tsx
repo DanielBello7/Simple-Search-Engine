@@ -3,6 +3,7 @@
 
 import React from 'react';
 import Loader from './Loader';
+import {useData} from '../context/DataContext';
 import {FaTimes} from 'react-icons/fa';
 import {Transition} from '@headlessui/react';
 import {BiSearch, BiTrash, BiFile} from 'react-icons/bi';
@@ -11,41 +12,65 @@ type ResultBoxProps = {
   searchActive: boolean,
   isLoading: boolean,
   searchItem: string,
-  recent: any[],
   results: any[],
-  setResult: React.Dispatch<React.SetStateAction<any | null>>,
-  setRecent: React.Dispatch<React.SetStateAction<any[]>>
+  setResult: React.Dispatch<React.SetStateAction<any | null>>
 }
 
 export default function ResultBox(props: ResultBoxProps) {
-  const {searchActive, isLoading, searchItem, recent, results, setRecent, setResult} = props;
+  const {searchActive, isLoading, searchItem, results, setResult} = props;
+
+  const {recent, setRecent} = useData();
 
   const RemoveRecentItem = (id: number) => {
     const filtered = recent.filter((item: any, index: number) => index !== id);
     return setRecent(filtered);
   }
   
-  const recentOutput = recent.map((item, index) => (
+  const recentOutput = recent.map((item, index) => {
+    let val = Object.keys(item)[0];
+
+    if (val === 'id' || val === '_id') val = Object.keys(item)[1];
+
+    return (
     <div className='w-full flex flex-row items-center justify-between hover:bg-slate-50 transition 0.3s p-2 rounded-lg cursor-pointer' 
     key={index}
     >
-    <div className='flex flex-row items-center w-full' onClick={() => alert(index)}>
+    <div className='flex flex-row items-center w-full' onClick={() => setResult(item)}>
     <BiFile color='blue' size={18}/>
-    <span className="ml-3 text-gray-400 font-bold">{item}</span>
+    <span className="ml-3 text-gray-400 font-bold">{item[val]}</span>
     </div>
     <FaTimes color='black' size={18} onClick={() => RemoveRecentItem(index)}/>
     </div>
-  ));
+    )
+  });
 
   const resultOutput = results.map((item, index) => {
     let val = Object.keys(item)[0];
 
     if (val === 'id' || val === '_id') val = Object.keys(item)[1];
 
+    const HandleClick = () => {
+      
+      const isPresent = recent.find(i => i[val] === item[val]);
+
+      if (isPresent) return setResult(item);
+
+      if (recent.length >= 4) {
+        
+        setRecent(prev => [...prev.slice(1, 4), item]);
+
+        return setResult(item);
+      }
+      
+      setRecent(prev => [...prev, item]);
+
+      return setResult(item);
+    }
+
     return (
     <div className='w-full flex flex-row items-center hover:bg-slate-50 transition 0.3s p-2 rounded-lg cursor-pointer' 
     key={index}
-    onClick={() => setResult(item)}
+    onClick={HandleClick}
     >
     <BiFile color='blue' size={18}/>
     <span className="ml-3 text-gray-400 font-bold">
