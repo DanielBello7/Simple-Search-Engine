@@ -37,15 +37,23 @@ export default function ResultBox(props: ResultBoxProps) {
     </div>
   ));
 
-  const resultOutput = results.map((item, index) => (
+  const resultOutput = results.map((item, index) => {
+    let val = Object.keys(item)[0];
+
+    if (val === 'id' || val === '_id') val = Object.keys(item)[1];
+
+    return (
     <div className='w-full flex flex-row items-center hover:bg-slate-50 transition 0.3s p-2 rounded-lg cursor-pointer' 
     key={index}
     onClick={() => setResult(item)}
     >
     <BiFile color='blue' size={18}/>
-    <span className="ml-3 text-gray-400 font-bold">{item}</span>
+    <span className="ml-3 text-gray-400 font-bold">
+      {item[val]}
+    </span>
     </div>
-  ));
+    )
+  });
 
   return (
   <Transition show={searchActive} 
@@ -74,11 +82,11 @@ export default function ResultBox(props: ResultBoxProps) {
     }
 
     {
-      searchItem.trim() && !isLoading && results.length <= 0 && <p className='w-full px-2 text-sm text-gray-300 text-center'>No results</p>
+      searchItem.trim() && !isLoading && results.length <= 0 && <p className='w-full px-2 text-sm text-gray-300 text-center py-2'>No results</p>
     }
 
     {
-      searchItem.trim() && results.length > 0 && isLoading &&
+      searchItem.trim() && results.length > 0 && !isLoading &&
       <React.Fragment>
       <p className='w-full px-2 text-sm text-gray-300 text-start'>Results</p>
       {resultOutput}
@@ -96,13 +104,10 @@ export default function ResultBox(props: ResultBoxProps) {
 
     {
       searchActive && isLoading && searchItem.trim() &&
-      <React.Fragment>
-      <div className='w-full border border-t border-b-0 mt-5' />
-      <div className='w-full flex flex-row items-center mt-3 p-2'>
+      <div className='w-full flex flex-row items-center mt-1 p-2'>
       <Loader color='text-blue-200' size={20}/>
       <span className="ml-3 text-gray-400 font-bold">Currently searching for {searchItem}...</span>
       </div>
-      </React.Fragment>
     }
   </Transition>
   );
