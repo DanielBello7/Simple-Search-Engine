@@ -13,32 +13,36 @@ type CodeBoxProps = {
 }
 
 export default function CodeBox({setShowing}: CodeBoxProps) {
-  const {ShowAlert, setData} = useData();
+  const {ShowAlert, setHasData, axios} = useData();
 
   const [value, setValue] = useState<string>("");
 
   const [isLoading, setLoading] = useState(false);
 
-  const HandleSubmit = () => {
-    if (!value.trim()) return;
+  const HandleSubmit = async () => {
+    if (!value.trim()) return ShowAlert('Enter JSON data', false);
 
     setLoading(true);
 
     try {
       const result = JSON.parse(value);
-      
-      setTimeout(() => {
-        setShowing(false);
-        setLoading(false);
-        console.log(result);
-      }, 2000);
 
-      setTimeout(() => {
-        setData(result);
-      }, 3000);
+      const sendResult = await axios.post("/data/upload", {repo: result});
+
+      const res = await sendResult.data.success;
+
+      if (!res) return ShowAlert("Error uploading data", false);
+
+      setShowing(false);
+      
+      setLoading(false);
+
+      return setTimeout(() => setHasData(true), 1000);
 
     } catch (error) {
+      
       ShowAlert("Error", false);
+
       return setLoading(false);
     }
   }

@@ -54,7 +54,7 @@ function useData() {
 }
 
 function DataContextProvider({children}: DataContextProps) {
-  const axios = Axios.create({baseURL: baseURL});
+  const axios = Axios.create({baseURL: baseURL, withCredentials: true});
 
   const [isLoading, setLoading] = useState(false);
 

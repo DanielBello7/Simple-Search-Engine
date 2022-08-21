@@ -15,7 +15,7 @@ export default function InputComponent() {
 
   return (
   <Transition as="div" show={isShowing} appear={true}
-    enter="transition-opacity duration-1000"
+    enter="transition-opacity duration-500"
     enterFrom="opacity-0"
     enterTo="opacity-100"
     leave="transition-opacity duration-150"

@@ -29,7 +29,7 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
   });
 
   const HandleSubmit = async () => {
-    if (!file) return;
+    if (!file) return ShowAlert('Select a JSON file', false);
 
     if (file.type !== 'application/json') return ShowAlert('Incorrect file type', false);
 

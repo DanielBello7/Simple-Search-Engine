@@ -60,7 +60,7 @@ export default function UserFormComponent() {
     .then((res) => {
       clearTimeout(timeout);
       setLoading(false);
-      return setTimeout(() => setUser(res), 2000);
+      return setTimeout(() => setUser(res), 500);
     })
     .catch((error) => {
       const Err = error as AxiosError;
@@ -77,7 +77,7 @@ export default function UserFormComponent() {
 
   return (
   <Transition as="div" show={isShowing} appear={true}
-    enter="transition-opacity duration-1000"
+    enter="transition-opacity duration-500"
     enterFrom="opacity-0"
     enterTo="opacity-100"
     leave="transition-opacity duration-150"

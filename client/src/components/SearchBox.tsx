@@ -35,46 +35,54 @@ export default function SearchBox({setResult}: SearchBoxProps) {
     recent.length <=3 && setRecent(prevState => [...prevState, searchItem]);
   }
 
+
   useEffect(() => {
+    const controller = new AbortController();
+
+    const timeoutID = setTimeout(() => controller.abort('timeout'), 12000);
+
     setLoading(true);
 
     setCurrent([]);
 
     if (!search.trim()) return setLoading(false);
+    
+    const searchTimeout = setTimeout(() => {
 
-    const controller = new AbortController();
+      axios.get(`/search/${search}`, {signal: controller.signal})
+      .then((res) => {
+        const results = res.data.data;
 
-    const timeoutID = setTimeout(() => controller.abort('timeout'), 12000);
+        setCurrent(results);
 
-    axios.get(`/search/${search}`, {signal: controller.signal})
-    .then((res) => {
-      const results = res.data.data;
-
-      setCurrent(results);
-
-      return setLoading(false);
-    })
-    .catch((error) => {
-      const err = error as AxiosError;
-
-      if (controller.signal.reason === 'timeout') {
-        ShowAlert('Request Timeout', false);
         return setLoading(false);
-      }
-      
-      if (Axios.isCancel(error)) return;
+      })
+      .catch((error) => {
+        const err = error as AxiosError;
 
-      setLoading(false);
+        if (controller.signal.reason === 'timeout') {
+          ShowAlert('Request Timeout', false);
+          return setLoading(false);
+        }
+        
+        if (Axios.isCancel(error)) return;
 
-      return ShowAlert(err.message, false);
-    });
+        setLoading(false);
 
+        return ShowAlert(err.message, false);
+      });
+
+    }, 500);
+    
     return () => {
       controller.abort();
 
       clearTimeout(timeoutID);
+
+      clearTimeout(searchTimeout);
     }
   }, [search]);
+
 
   useEffect(() => {
     const timeout = setTimeout(() => setIsShown(true), 500);
