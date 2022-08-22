@@ -11,7 +11,7 @@ type ImportBoxProps = {
 }
 
 export default function ImportBox({setShowing}: ImportBoxProps) {
-  const {ShowAlert, setHasData, axios, setData} = useData();
+  const {ShowAlert, setHasData, axios, setData, isDarkMode} = useData();
 
   const [isLoading, setLoading] = useState(false);
 
@@ -78,15 +78,15 @@ export default function ImportBox({setShowing}: ImportBoxProps) {
   }
 
   return (
-  <div className="shadow sm:rounded-md sm:overflow-hidden border-2">
-  <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
+  <div className={`${isDarkMode ? "border-slate-700" : ""} shadow sm:rounded-md sm:overflow-hidden border-2`}>
+  <div className={`${isDarkMode ? "text-white bg-slate-700" : "bg-white"} px-4 py-5 space-y-6 sm:p-6`}>
   <FileImportComponent fileTypeText="JSON file up to 10MB" 
     title="Upload file"
     setFile={setFile}
     file={file}
     />
   </div>
-  <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+  <div className={`${isDarkMode ? "bg-slate-700" : "bg-grey-50"} px-4 py-3 text-right sm:px-6`}>
   <ButtonComponent click={HandleSubmit} 
     color="blue" 
     isLoading={isLoading} 

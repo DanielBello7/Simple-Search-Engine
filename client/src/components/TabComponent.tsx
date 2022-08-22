@@ -5,6 +5,7 @@ import {useState} from 'react';
 import {Tab} from '@headlessui/react';
 import CodeBox from './CodeBox';
 import ImportBox from './ImportBox';
+import { useData } from '../context/DataContext';
 
 type TabComponentProps = {
   setShowing: React.Dispatch<React.SetStateAction<boolean>>
@@ -17,6 +18,8 @@ function classNames(...classes: any) {
 export default function TabComponent({ setShowing }: TabComponentProps) {
 
   const [categories] = useState(["Input", "Upload"]);
+
+  const {isDarkMode} = useData();
 
   return (
   <div className="w-full px-2 sm:px-0">
@@ -38,7 +41,7 @@ export default function TabComponent({ setShowing }: TabComponentProps) {
   {
     categories.map((category, idx) => {
       return (
-      <Tab.Panel key={idx} className="h-72 my-6">
+      <Tab.Panel key={idx} className={`h-72 my-6`}>
       {
         category === "Input" 
         ? <CodeBox setShowing={setShowing} /> 

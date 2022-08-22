@@ -4,7 +4,7 @@
 import {useState} from 'react';
 import {json} from '@codemirror/lang-json';
 import {useData} from '../context/DataContext';
-import {githubLight} from '@uiw/codemirror-theme-github';
+import {githubLight, githubDark} from '@uiw/codemirror-theme-github';
 import ButtonComponent from './ButtonComponent';
 import CodeMirror from '@uiw/react-codemirror';
 
@@ -13,7 +13,7 @@ type CodeBoxProps = {
 }
 
 export default function CodeBox({setShowing}: CodeBoxProps) {
-  const {ShowAlert, setHasData, axios, setData} = useData();
+  const {ShowAlert, setHasData, axios, setData, isDarkMode} = useData();
 
   const [value, setValue] = useState<string>("");
 
@@ -61,18 +61,18 @@ export default function CodeBox({setShowing}: CodeBoxProps) {
   }
 
   return (
-  <div className="w-100 flex flex-col h-full shadow sm:rounded-md sm:overflow-hidden border-2">
+  <div className={`${isDarkMode ? "bg-slate-800" : "bg-white"} w-100 flex flex-col h-full shadow sm:rounded-md sm:overflow-hidden border-2"`}>
   <CodeMirror
     value={value}
     height="100%"
     id="codebox"
     className='flex-1 h-4/5'
     autoCapitalize='off'
-    theme={{extension: githubLight}}
+    theme={{extension: isDarkMode ? githubDark : githubLight}}
     extensions={[json()]}
     onChange={(e) => setValue(e)}
     />
-  <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
+  <div className={`${isDarkMode ? "bg-slate-800" : "bg-gray-50"} px-4 py-3 text-right sm:px-6`}>
   <ButtonComponent click={HandleSubmit} 
     color="blue" 
     isLoading={isLoading} 

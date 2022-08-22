@@ -1,6 +1,7 @@
 
 
 
+import { useData } from "../context/DataContext";
 
 type TextInformationProps = {
   title: string,
@@ -8,6 +9,9 @@ type TextInformationProps = {
 }
 
 export default function TextInformation({ title, body }: TextInformationProps) {
+  
+  const {isDarkMode} = useData();
+
   return (
   <div className="md:col-span-1">
   <div className="px-4 sm:px-0">

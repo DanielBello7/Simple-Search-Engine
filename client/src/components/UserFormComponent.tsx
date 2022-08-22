@@ -17,7 +17,7 @@ export default function UserFormComponent() {
 
   const emailRef = useRef<HTMLInputElement>(null);
 
-  const {ShowAlert, setUser, axios} = useData();
+  const {ShowAlert, setUser, axios, isDarkMode} = useData();
 
   const [isShowing, setShowing] = useState(false);
 
@@ -94,7 +94,7 @@ export default function UserFormComponent() {
     
     <div className="mt-5 md:mt-0 md:col-span-2">
     <form className="shadow overflow-hidden sm:rounded-md" onSubmit={HandleSubmit}>
-    <div className="px-4 py-5 bg-white sm:p-6">
+    <div className={`${isDarkMode ? "bg-slate-700" : "bg-white"} px-4 py-5 bg-white sm:p-6`}>
     <TextInputBox2 title="First name" 
       length="3" 
       disabled={isLoading} 
@@ -117,7 +117,7 @@ export default function UserFormComponent() {
       value={emailRef}/>
     </div>
 
-    <div className="px-4 py-3 bg-gray-50 text-right sm:px-6 flex flex-row items-center justify-end">
+    <div className={`${isDarkMode ? "bg-slate-800" : "text-grey-50"} px-4 py-3 text-right sm:px-6 flex flex-row items-center justify-end`}>
     <button type='button' disabled={isLoading && true} className='mr-2 px-7 py-2 text-sm bg-gray-400 text-white rounded-lg border-2 hover:bg-gray-500' onClick={HandleSkip}>Skip</button>
 
     <ButtonComponent click={HandleSubmit} title="Continue" color='blue' isLoading={isLoading}/>

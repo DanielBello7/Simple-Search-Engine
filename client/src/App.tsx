@@ -11,10 +11,10 @@ import Footer from "./components/Footer";
 import AlertModal from "./components/AlertModal";
 
 export default function App() {
-  const {searchActive} = useData();
+  const {searchActive, isDarkMode} = useData();
 
   return (
-  <div className={`w-100 flex flex-col h-screen max-h-full overflow-hidden ${searchActive ? "bg-gray-100" : "bg-white"}`} id="backBox">
+  <div className={`${isDarkMode ? 'bg-gray-900' : 'bg-white'} w-100 flex flex-col h-screen max-h-full overflow-hidden ${searchActive ? "bg-gray-50" : "bg-gray-100"}`} id="backBox">
   <Header />
   <div className="w-full flex flex-col h-5/6">
   <Routes>

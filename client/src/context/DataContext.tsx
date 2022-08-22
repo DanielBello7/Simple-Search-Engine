@@ -52,7 +52,7 @@ type DataContextProps = {
   children: React.ReactNode
 }
 
-const baseURL = "http://127.0.0.1:2022/api";
+const baseURL = "http://localhost:2022/api";
 
 const DataContext = React.createContext({} as DataContextType);
 

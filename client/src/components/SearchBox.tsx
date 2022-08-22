@@ -86,7 +86,7 @@ export default function SearchBox({setResult}: SearchBoxProps) {
   }, []);
 
   return (
-    <Transition className="w-full flex h-full relative flex-col items-center justify-center px-3" show={isShown}
+    <Transition.Root className="w-full flex h-full relative flex-col items-center justify-center px-3" show={isShown}
     enter="transform transition-opacity duration-500"
     enterFrom="opacity-0 scale-50"
     enterTo="opacity-100 scale-100"
@@ -95,7 +95,7 @@ export default function SearchBox({setResult}: SearchBoxProps) {
     leaveTo="opacity-0"
   >
     <div className='w-full absolute top-0 h-full -z-1' onClick={() => setSearchActive(false)}/>
-    <form className={`${!searchActive ? "bg-gray-100 -mt-10 mb-10" : "bg-white"} w-full md:w-4/5 lg:w-2/5 flex flex-row items-center p-3 rounded-lg shadow z-10`} 
+    <form className={`${!searchActive ? "bg-white -mt-10 mb-10" : "bg-white"} w-full md:w-4/5 lg:w-2/5 flex flex-row items-center p-3 rounded-lg shadow z-10`} 
           onSubmit={HandleSearch}
           id="search-form">
     <BiSearch size={30} color="grey" className="mr-3" />
@@ -121,6 +121,6 @@ export default function SearchBox({setResult}: SearchBoxProps) {
                  setResult={setResult}
                  />
     }
-  </Transition>
+  </Transition.Root>
   );
 }
