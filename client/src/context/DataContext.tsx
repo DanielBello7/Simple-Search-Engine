@@ -52,7 +52,8 @@ type DataContextProps = {
   children: React.ReactNode
 }
 
-const baseURL = "http://localhost:2022/api";
+// const baseURL = "http://localhost:2022/api";
+const baseURL = "https://finder-server-app.herokuapp.com/api";
 
 const DataContext = React.createContext({} as DataContextType);
 
