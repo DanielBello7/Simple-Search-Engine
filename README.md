@@ -1,4 +1,4 @@
-# Simple-Search-Engine (Find)
+# Simple-Search-Engine (Finder)
 
 A search engine that enables you to find somthing within a set of given files
 You can submit files of anytype and run a search algorithm to find a particular item
