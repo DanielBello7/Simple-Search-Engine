@@ -1,6 +1,3 @@
-
-
-
 import React, { useState, useContext, useEffect } from "react";
 import Axios, { AxiosInstance } from 'axios';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -32,7 +29,7 @@ type DataContextType = {
   isAlertOpen: boolean,
   setAlertOpen: React.Dispatch<React.SetStateAction<boolean>>,
 
-  alertData: {msg: string, type: boolean},
+  alertData: { msg: string, type: boolean },
   setAlertData: React.Dispatch<React.SetStateAction<AlertDataType>>,
 
   isDarkMode: boolean,
@@ -61,29 +58,20 @@ function useData() {
   return useContext(DataContext);
 }
 
-function DataContextProvider({children}: DataContextProps) {
-  const axios = Axios.create({baseURL: baseURL});
-
-  const [isLoading, setLoading] = useState(false);
-
-  const [isDarkMode, setDarkMode] = useState(false);
-
-  const [isAlertOpen, setAlertOpen] = useState(false);
-
-  const [hasData, setHasData] = useLocalStorage('hasData', false);
-
-  const [data, setData] = useLocalStorage<any[] | null>('data', null);
-
-  const [recent, setRecent] = useLocalStorage<any[]>('recent', []);
-
-  const [searchActive, setSearchActive] = useState(false);
-
+function DataContextProvider({ children }: DataContextProps) {
   const [user, setUser] = useLocalStorage<UserDataType | null>('user', null);
-
+  const [isDarkMode, setDarkMode] = useState(false);
+  const [hasData, setHasData] = useLocalStorage('hasData', false);
+  const axios = Axios.create({ baseURL: baseURL });
+  const [isLoading, setLoading] = useState(false);
+  const [isAlertOpen, setAlertOpen] = useState(false);
+  const [data, setData] = useLocalStorage<any[] | null>('data', null);
+  const [recent, setRecent] = useLocalStorage<any[]>('recent', []);
+  const [searchActive, setSearchActive] = useState(false);
   const [alertData, setAlertData] = useState({} as AlertDataType);
 
   const ShowAlert = (msg: string, type: boolean) => {
-    setAlertData({msg: msg, type: type});
+    setAlertData({ msg: msg, type: type });
     return setAlertOpen(true);
   }
 
@@ -92,39 +80,39 @@ function DataContextProvider({children}: DataContextProps) {
   }, []);
 
   return (
-  <DataContext.Provider value={{
-    hasData,
-    setHasData,
+    <DataContext.Provider value={{
+      hasData,
+      setHasData,
 
-    data,
-    setData,
+      data,
+      setData,
 
-    recent,
-    setRecent,
+      recent,
+      setRecent,
 
-    isLoading,
-    setLoading,
+      isLoading,
+      setLoading,
 
-    isAlertOpen,
-    setAlertOpen,
+      isAlertOpen,
+      setAlertOpen,
 
-    alertData,
-    setAlertData,
+      alertData,
+      setAlertData,
 
-    isDarkMode,
-    setDarkMode,
+      isDarkMode,
+      setDarkMode,
 
-    user,
-    setUser,
+      user,
+      setUser,
 
-    searchActive,
-    setSearchActive,
+      searchActive,
+      setSearchActive,
 
-    ShowAlert,
-    axios
-  }}>
-    {children}
-  </DataContext.Provider>
+      ShowAlert,
+      axios
+    }}>
+      {children}
+    </DataContext.Provider>
   );
 }
 

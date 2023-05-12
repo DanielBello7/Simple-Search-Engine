@@ -1,6 +1,3 @@
-
-
-
 import { FaSpinner } from 'react-icons/fa';
 
 type LaoderProps = {
@@ -8,6 +5,6 @@ type LaoderProps = {
   size: number
 }
 
-export default function Loader({color, size}: LaoderProps) {
-  return <FaSpinner size={size} color={color} className="animate-spin"/>
+export default function Loader({ color, size }: LaoderProps) {
+  return <FaSpinner size={size} color={color} className="animate-spin" />
 }
